@@ -12,7 +12,7 @@ body {
 }
 
 .container {
-  max-width: 1000px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -42,10 +42,37 @@ h1 {
 }
 
 form.fact-form {
+  display: flex;
+  align-items: center;
+  gap: 16px;
   background-color: #44403c;
   margin-bottom: 40px;
   padding: 16px 40px;
-  text-align: center;
+  border-radius: 16px;
+}
+
+form.fact-form input, form.fact-form select {
+  width: 220px;
+  background-color: #78716c;
+  border: none;
+  border-radius: 1000px;
+  padding: 16px;
+  color: inherit;
+  font-family: inherit;
+}
+
+form.fact-form input::placeholder {
+  color: #a3a3a3;
+}
+
+form.fact-form .fact-input {
+  flex-grow: 1;
+}
+
+form.fact-form span {
+  font-weight: 600;
+  font-size: 18px;
+  margin-right: 18px;
 }
 
 main.main {
@@ -59,14 +86,15 @@ ul {
 }
 
 li.fact {
+  display: flex;
+  align-items: center;
+  gap: 24px;
   font-size: 20px;
   line-height: 1.4;
   background-color: #44403c;
   margin-bottom: 16px;
   padding: 16px 30px;
-  display: flex;
-  align-items: center;
-  gap: 24px;
+  border-radius: 16px;
 }
 
 li.fact p {
@@ -94,7 +122,27 @@ span.tag.society {
 }
 
 .vote-buttons {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
   margin-left: auto;
+}
+
+.vote-buttons button {
+  border: none;
+  background-color: #57534e;
+  font-size: 18px;
+  padding: 6px 12px;
+  border-radius: 1000px;
+  color: inherit;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.vote-buttons button:hover {
+  background-color: #292524;
+  transition: 0.3s;
 }
 
 .source:link,
@@ -105,7 +153,8 @@ span.tag.society {
   transition: 0.3s;
 }
 
-.source:hover, .source:active {
+.source:hover,
+.source:active {
   color: #3b82f6;
 }
 
@@ -141,4 +190,31 @@ span.tag.society {
   width: 100%;
   background-image: none;
   background-color: #44403c;
+}
+
+@media (max-width: 1200px) {
+  body {
+    padding: 32px 48px;
+  }
+
+  form.fact-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  form.fact-form input, form.fact-form select {
+    width: auto;
+  }
+
+  li.fact {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px
+  }
+}
+
+@media (max-width: 900px) {
+  main.main {
+    grid-template-columns: 1fr;
+  }
 }
