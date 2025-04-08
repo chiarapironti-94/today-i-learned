@@ -1,4 +1,21 @@
-const CATEGORIES = [
+type CategoryName =
+  | "technology"
+  | "science"
+  | "finance"
+  | "society"
+  | "entertainment"
+  | "health"
+  | "history"
+  | "news";
+
+type HexColor = string;
+
+type Category = {
+  name: CategoryName;
+  color: HexColor;
+};
+
+const CATEGORIES: Category[] = [
   { name: "technology", color: "#3b82f6" },
   { name: "science", color: "#16a34a" },
   { name: "finance", color: "#ef4444" },
@@ -9,7 +26,19 @@ const CATEGORIES = [
   { name: "news", color: "#8b5cf6" },
 ];
 
-const initialFacts = [
+export interface Fact {
+  id: number;
+  text: string;
+  source: string;
+  category: CategoryName;
+  votesInteresting: number;
+  votesMindblowing: number;
+  votesFalse: number;
+  createdIn: number;
+}
+
+// TEMP DATA
+export const initialFacts: Fact[] = [
   {
     id: 1,
     text: "React is being developed by Meta (formerly facebook)",
@@ -42,7 +71,3 @@ const initialFacts = [
     createdIn: 2015,
   },
 ];
-
-// LINK TO APP SAMPLE DATA: https://docs.google.com/spreadsheets/d/1eeldcA_OwP4DHYEvjG0kDe0cRys-cDPhc_E9P9G1e3I/edit#gid=0
-
-// 👍 🤯 ⛔️
