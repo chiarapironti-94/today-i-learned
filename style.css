@@ -41,7 +41,7 @@ h1 {
   padding-top: 10px;
 }
 
-form.fact-form {
+.fact-form {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -217,4 +217,9 @@ span.tag.society {
   main.main {
     grid-template-columns: 1fr;
   }
+}
+
+/* UTILITY CLASSES */
+.hidden {
+  display: none;
 }
