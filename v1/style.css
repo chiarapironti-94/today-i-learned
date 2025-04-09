@@ -113,14 +113,6 @@ span.tag {
   border-radius: 1000px;
 }
 
-span.tag.technology {
-  background-color: #3b82f6;
-}
-
-span.tag.society {
-  background-color: #eab308;
-}
-
 .vote-buttons {
   display: flex;
   gap: 8px;

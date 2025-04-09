@@ -1,5 +1,12 @@
-import { Fact } from "./data.js";
-import { SUPABASE_ENDPOINT, SUPABASE_KEY } from "./config.js";
+import { CATEGORIES, CategoryName, HexColor, Fact } from './data.js';
+import { SUPABASE_ENDPOINT, SUPABASE_KEY } from './config.js';
+
+const getTagColor = (categoryName: CategoryName): HexColor => {
+  const category = CATEGORIES.find(
+    (category) => category.name === categoryName
+  );
+  return category?.color || '#292524';
+};
 
 export const drawFacts = function (facts: Fact[]): string[] {
   return facts.map(
@@ -13,7 +20,9 @@ export const drawFacts = function (facts: Fact[]): string[] {
                         >(Source)</a
                       >
                     </p>
-                    <span class="tag technology">${fact.category}</span>
+                    <span class="tag" style="background-color: ${getTagColor(
+                      fact.category
+                    )}">${fact.category}</span>
                     <div class="vote-buttons">
                       <button>👍 ${fact.votesInteresting}</button>
                       <button>🤯 ${fact.votesMindblowing}</button>
