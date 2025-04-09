@@ -1,4 +1,5 @@
-import { Fact } from "./data";
+import { Fact } from "./data.js";
+import { SUPABASE_ENDPOINT, SUPABASE_KEY } from "./config.js";
 
 export const drawFacts = function (facts: Fact[]): string[] {
   return facts.map(
@@ -21,3 +22,15 @@ export const drawFacts = function (facts: Fact[]): string[] {
                   </li>`
   );
 };
+
+export async function loadFacts(): Promise<Fact[]> {
+  const res = await fetch(SUPABASE_ENDPOINT, {
+    headers: {
+      apikey: SUPABASE_KEY,
+      authorization: `Bearer ${SUPABASE_KEY}`,
+    },
+  });
+  const data: Fact[] = await res.json();
+
+  return data;
+}

@@ -1,0 +1,4 @@
+export const SUPABASE_ENDPOINT =
+  "https://vthkgebucvwdygrgthfa.supabase.co/rest/v1/facts";
+export const SUPABASE_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ0aGtnZWJ1Y3Z3ZHlncmd0aGZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQxMDEwODAsImV4cCI6MjA1OTY3NzA4MH0.P7ts7s1_6hEdNHkrmcectZL543429OY2gIQIEcBU3tc";
