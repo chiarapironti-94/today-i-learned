@@ -51,7 +51,8 @@ h1 {
   border-radius: 16px;
 }
 
-form.fact-form input, form.fact-form select {
+form.fact-form input,
+form.fact-form select {
   width: 220px;
   background-color: #78716c;
   border: none;
@@ -198,14 +199,15 @@ span.tag {
     align-items: stretch;
   }
 
-  form.fact-form input, form.fact-form select {
+  form.fact-form input,
+  form.fact-form select {
     width: auto;
   }
 
   li.fact {
     flex-direction: column;
     align-items: flex-end;
-    gap: 12px
+    gap: 12px;
   }
 }
 
@@ -218,4 +220,68 @@ span.tag {
 /* UTILITY CLASSES */
 .hidden {
   display: none;
+}
+
+.message {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.loading {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid transparent;
+  border-top: 3px solid #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  background: conic-gradient(
+    #3b82f6,
+    #16a34a,
+    #ef4444,
+    #eab308,
+    #db2777,
+    #14b8a6,
+    #f97316,
+    #8b5cf6
+  );
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 3px),
+    black calc(100% - 3px)
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 3px),
+    black calc(100% - 3px)
+  );
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

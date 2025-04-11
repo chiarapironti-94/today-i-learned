@@ -1,12 +1,17 @@
-import { FactsArrayProps } from '../Utils';
+import { Fact } from '../Utils';
 import { FactCard } from './FactCard';
 
-export function FactList({ facts }: FactsArrayProps) {
+type FactListProps = {
+  facts: Fact[];
+  className?: string;
+};
+
+export function FactList({ facts, className = '' }: FactListProps) {
   return (
-    <section>
+    <section className={className}>
       <ul className="facts-list">
         {facts.map((fact) => (
-          <FactCard key={fact.id} fact={fact}></FactCard>
+          <FactCard key={fact.id} fact={fact} />
         ))}
       </ul>
     </section>

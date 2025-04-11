@@ -1,3 +1,5 @@
+import { supabase } from './supabase';
+
 export function isValidHttpUrl(str: string): boolean {
   let url;
 
@@ -28,6 +30,11 @@ export const createNewFact = (
 
   return newFact;
 };
+
+export async function fetchFacts() {
+  const { data: facts, error } = await supabase.from('facts').select('*');
+  return { facts, error };
+}
 
 export type BooleanStateSetter = React.Dispatch<React.SetStateAction<boolean>>;
 export type FactsArrayStateSetter = React.Dispatch<
@@ -88,10 +95,6 @@ export interface Fact {
   votesFalse: number;
   createdIn: number;
 }
-
-export type FactsArrayProps = {
-  facts: Fact[];
-};
 
 // TEMP DATA
 export const initialFacts: Fact[] = [
