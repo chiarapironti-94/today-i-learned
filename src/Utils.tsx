@@ -1,27 +1,61 @@
+export function isValidHttpUrl(str: string): boolean {
+  let url;
+
+  try {
+    url = new URL(str);
+  } catch (_) {
+    return false;
+  }
+
+  return url.protocol === 'http:' || url.protocol === 'https:';
+}
+
+export const createNewFact = (
+  text: string,
+  source: string,
+  category: CategoryName
+): Fact => {
+  const newFact: Fact = {
+    id: Math.round(Math.random() * 1000000),
+    text,
+    source,
+    category,
+    votesInteresting: 0,
+    votesMindblowing: 0,
+    votesFalse: 0,
+    createdIn: new Date().getFullYear(),
+  };
+
+  return newFact;
+};
+
 export type BooleanStateSetter = React.Dispatch<React.SetStateAction<boolean>>;
+export type FactsArrayStateSetter = React.Dispatch<
+  React.SetStateAction<Fact[]>
+>;
 
 export const STRINGS = {
-  appName: "Today I Learned! ",
-  btnShareFact: "Share a fact",
-  btnCloseForm: "Close",
-  btnPostForm: "Post",
-  optionAll: "All",
-  factPlaceholder: "Share a fact with the world...",
-  sourcePlaceholder: "Trustworthy source..."
+  appName: 'Today I Learned! ',
+  btnShareFact: 'Share a fact',
+  btnCloseForm: 'Close',
+  btnPostForm: 'Post',
+  optionAll: 'All',
+  factPlaceholder: 'Share a fact with the world...',
+  sourcePlaceholder: 'Trustworthy source...',
 };
 
 export const CATEGORY_NAMES = [
-  "technology",
-  "science",
-  "finance",
-  "society",
-  "entertainment",
-  "health",
-  "history",
-  "news",
+  'technology',
+  'science',
+  'finance',
+  'society',
+  'entertainment',
+  'health',
+  'history',
+  'news',
 ] as const;
 
-export type CategoryName = typeof CATEGORY_NAMES[number];
+export type CategoryName = (typeof CATEGORY_NAMES)[number];
 
 export type HexColor = `#${string}`;
 
@@ -33,14 +67,14 @@ export type Category = {
 export const CATEGORIES: Category[] = CATEGORY_NAMES.map((name, i) => ({
   name,
   color: [
-    "#3b82f6",
-    "#16a34a",
-    "#ef4444",
-    "#eab308",
-    "#db2777",
-    "#14b8a6",
-    "#f97316",
-    "#8b5cf6",
+    '#3b82f6',
+    '#16a34a',
+    '#ef4444',
+    '#eab308',
+    '#db2777',
+    '#14b8a6',
+    '#f97316',
+    '#8b5cf6',
   ][i] as HexColor,
 }));
 
@@ -54,6 +88,10 @@ export interface Fact {
   votesFalse: number;
   createdIn: number;
 }
+
+export type FactsArrayProps = {
+  facts: Fact[];
+};
 
 // TEMP DATA
 export const initialFacts: Fact[] = [

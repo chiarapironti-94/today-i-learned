@@ -1,7 +1,20 @@
 import { useState } from 'react';
-import { CATEGORY_NAMES, STRINGS } from '../Utils';
+import {
+  CATEGORY_NAMES,
+  CategoryName,
+  STRINGS,
+  isValidHttpUrl,
+  createNewFact,
+  FactsArrayStateSetter,
+  BooleanStateSetter,
+} from '../Utils';
 
-export function NewFactForm() {
+export type NewFactFormProps = {
+  setFacts: FactsArrayStateSetter;
+  setShowForm: BooleanStateSetter;
+};
+
+export function NewFactForm({ setFacts, setShowForm }: NewFactFormProps) {
   const [text, setText] = useState('');
   const [source, setSource] = useState('');
   const [category, setCategory] = useState('');
@@ -9,10 +22,27 @@ export function NewFactForm() {
   // variable derived from state
   const charactersLeft = 200 - text.length;
 
+  const isDataValid = (): boolean => {
+    return (
+      !!text && isValidHttpUrl(source) && !!category && charactersLeft >= 0
+    );
+  };
+
   const handleSubmitForm: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
+
+    if (!isDataValid()) return;
+
+    const fact = createNewFact(text, source, category as CategoryName);
+    setFacts((prev) => [fact, ...prev]);
+
+    setText('');
+    setSource('');
+    setCategory('');
+
+    setShowForm((prev) => !prev);
   };
-    
+
   return (
     <form className="fact-form" onSubmit={handleSubmitForm}>
       <input
