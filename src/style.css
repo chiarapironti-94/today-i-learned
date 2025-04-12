@@ -80,10 +80,29 @@ form.fact-form select option {
   text-transform: capitalize;
 }
 
+form.fact-form.is-uploading {
+  opacity: 0.6;
+  pointer-events: none;
+  filter: grayscale(20%);
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
 main.main {
   display: grid;
   grid-template-columns: 250px 1fr;
   column-gap: 48px;
+  height: calc(100vh - 68px - 40px - 48px - 58px);
+}
+
+section {
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-y: auto;
+  padding-bottom: 40px;
+}
+
+section::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
 }
 
 ul {
@@ -140,6 +159,13 @@ span.tag {
 .vote-buttons button:hover {
   background-color: #292524;
   transition: 0.3s;
+}
+
+.vote-buttons button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: scale(0.98);
+  transition: opacity 0.3s ease, transform 0.2s ease;
 }
 
 .source:link,
@@ -214,6 +240,32 @@ span.tag {
 @media (max-width: 900px) {
   main.main {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .main {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+}
+ 
+@media (max-width: 600px) {
+  #root {
+    padding: 24px;
+  }
+ 
+  header.header {
+    flex-direction: column;
+    gap: 16px;
+  }
+ 
+  form.fact-form {
+    padding: 16px;
+  }
+ 
+  li.fact {
+    padding: 12px 16px;
   }
 }
 

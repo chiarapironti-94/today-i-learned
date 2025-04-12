@@ -1,4 +1,4 @@
-import { supabase } from "./supabase";
+import { supabase } from './supabase';
 
 // Types and Interfaces
 type QueryBuilder = ReturnType<typeof buildQuery>;
@@ -11,6 +11,7 @@ export type CategoryNameStateSetter = React.Dispatch<
 >;
 
 export type CategoryName = (typeof CATEGORY_NAMES)[number];
+export type VoteColumn = 'votesInteresting' | 'votesMindblowing' | 'votesFalse';
 
 export type HexColor = `#${string}`;
 
@@ -19,52 +20,49 @@ export type Category = {
   color: HexColor;
 };
 
-export interface Fact {
+export interface Fact extends Record<VoteColumn, number> {
   id: number;
   text: string;
   source: string;
   category: CategoryName;
-  votesInteresting: number;
-  votesMindblowing: number;
-  votesFalse: number;
   createdIn: number;
 }
 
 // Constants
 export const STRINGS = {
-  appName: "Today I Learned! ",
-  btnShareFact: "Share a fact",
-  btnCloseForm: "Close",
-  btnPostForm: "Post",
-  optionAll: "All",
-  factPlaceholder: "Share a fact with the world...",
-  sourcePlaceholder: "Trustworthy source...",
-  categoryEmpty: "Oh darn, looks like there are no facts in this category 😓",
+  appName: 'Today I Learned! ',
+  btnShareFact: 'Share a fact',
+  btnCloseForm: 'Close',
+  btnPostForm: 'Post',
+  optionAll: 'All',
+  factPlaceholder: 'Share a fact with the world...',
+  sourcePlaceholder: 'Trustworthy source...',
+  categoryEmpty: 'Oh darn, looks like there are no facts in this category 😓',
 };
 
 export const CATEGORY_NAMES = [
-  "technology",
-  "science",
-  "finance",
-  "society",
-  "entertainment",
-  "health",
-  "history",
-  "news",
-  "all",
+  'technology',
+  'science',
+  'finance',
+  'society',
+  'entertainment',
+  'health',
+  'history',
+  'news',
+  'all',
 ] as const;
 
 export const CATEGORIES: Category[] = CATEGORY_NAMES.map((name, i) => ({
   name,
   color: [
-    "#3b82f6",
-    "#16a34a",
-    "#ef4444",
-    "#eab308",
-    "#db2777",
-    "#14b8a6",
-    "#f97316",
-    "#8b5cf6",
+    '#3b82f6',
+    '#16a34a',
+    '#ef4444',
+    '#eab308',
+    '#db2777',
+    '#14b8a6',
+    '#f97316',
+    '#8b5cf6',
   ][i] as HexColor,
 }));
 
@@ -79,9 +77,10 @@ export function isValidHttpUrl(str: string): boolean {
     return false;
   }
 
-  return url.protocol === "http:" || url.protocol === "https:";
+  return url.protocol === 'http:' || url.protocol === 'https:';
 }
 
+// create static fact, unused as of now
 export function createNewFact(
   text: string,
   source: string,
@@ -103,14 +102,14 @@ export function createNewFact(
 
 export function buildQuery(
   category: CategoryName,
-  column: keyof Fact = "votesInteresting",
+  column: keyof Fact = 'votesInteresting',
   limit: number = 1000,
   options: { ascending?: boolean; nullsFirst?: boolean } = { ascending: false }
 ) {
-  let query = supabase.from("facts").select("*");
+  let query = supabase.from('facts').select('*');
 
-  if (category !== "all") {
-    query = query.eq("category", category);
+  if (category !== 'all') {
+    query = query.eq('category', category);
   }
 
   return query.order(column, options).limit(limit);
@@ -123,13 +122,41 @@ export async function fetchFacts(
   return { facts, error };
 }
 
+// this returns an array with a single element, the new added one
+export async function insertNewFact(
+  text: string,
+  source: string,
+  category: CategoryName
+): Promise<{ newFact: Fact | null; error: any }> {
+  const { data, error } = await supabase
+    .from('facts')
+    .insert([{ text, source, category }])
+    .select();
+
+  return { newFact: data?.[0] ?? null, error };
+}
+
+export async function updateFactVote(
+  column: VoteColumn,
+  newValue: number,
+  id: number
+): Promise<{ updatedFact: Fact | null; error: any }> {
+  const { data, error } = await supabase
+    .from('facts')
+    .update({ [column]: newValue })
+    .eq('id', id)
+    .select();
+
+  return { updatedFact: data?.[0] ?? null, error };
+}
+
 // TEMP DATA
 export const initialFacts: Fact[] = [
   {
     id: 1,
-    text: "React is being developed by Meta (formerly facebook)",
-    source: "https://opensource.fb.com/",
-    category: "technology",
+    text: 'React is being developed by Meta (formerly facebook)',
+    source: 'https://opensource.fb.com/',
+    category: 'technology',
     votesInteresting: 24,
     votesMindblowing: 9,
     votesFalse: 4,
@@ -137,10 +164,10 @@ export const initialFacts: Fact[] = [
   },
   {
     id: 2,
-    text: "Millennial dads spend 3 times as much time with their kids than their fathers spent with them. In 1982, 43% of fathers had never changed a diaper. Today, that number is down to 3%",
+    text: 'Millennial dads spend 3 times as much time with their kids than their fathers spent with them. In 1982, 43% of fathers had never changed a diaper. Today, that number is down to 3%',
     source:
-      "https://www.mother.ly/parenting/millennial-dads-spend-more-time-with-their-kids",
-    category: "society",
+      'https://www.mother.ly/parenting/millennial-dads-spend-more-time-with-their-kids',
+    category: 'society',
     votesInteresting: 11,
     votesMindblowing: 2,
     votesFalse: 0,
@@ -148,9 +175,9 @@ export const initialFacts: Fact[] = [
   },
   {
     id: 3,
-    text: "Lisbon is the capital of Portugal",
-    source: "https://en.wikipedia.org/wiki/Lisbon",
-    category: "society",
+    text: 'Lisbon is the capital of Portugal',
+    source: 'https://en.wikipedia.org/wiki/Lisbon',
+    category: 'society',
     votesInteresting: 8,
     votesMindblowing: 3,
     votesFalse: 1,

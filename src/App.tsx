@@ -42,7 +42,7 @@ function App() {
         {isLoading ? (
           <LoadingScreen />
         ) : (
-          <FactList facts={facts} className="fade-in" />
+          <FactList facts={facts} setFacts={setFacts} className="fade-in" />
         )}
       </main>
     </>
